@@ -1,3 +1,0 @@
-cargo:rerun-if-changed=build/main.rs
-cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/cryptolib/target/debug/build/typenum-2e68d377b6738576/out/consts.rs
-cargo:rustc-env=TYPENUM_BUILD_OP=/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/cryptolib/target/debug/build/typenum-2e68d377b6738576/out/op.rs
