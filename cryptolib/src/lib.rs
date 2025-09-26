@@ -34,6 +34,10 @@ impl PublicKey {
         let c = CompressedRistretto(arr);
         c.decompress().map(|p| PublicKey(p))
     }
+
+    // pub fn from_point(p: RistrettoPoint) -> Self {
+    //     PublicKey(p)
+    // }
 }
 
 /// A private key
@@ -56,6 +60,7 @@ impl PrivateKey {
     /// Deserialize this private key from 64 bytes
     pub fn from_bytes(bytes: &[u8]) -> Option<PrivateKey> {
         if bytes.len() != 64 {
+            println!("hello guys");
             return None;
         }
         let (scalar_bytes, pubkey_point_bytes) = bytes.split_at(32);
@@ -76,18 +81,14 @@ impl PrivateKey {
     }
 }
 
-#[no_mangle]
-#[export_name = "is_valid_scalar"]
-pub extern "C" fn is_valid_scalar(bytes: &mut [u8; 32]) -> bool {
+pub fn is_valid_scalar(bytes: &mut [u8; 32]) -> bool {
     if let Some(_) = Scalar::from_canonical_bytes(*bytes) {
         return true;
     }
     false
 }
 
-#[no_mangle]
-#[export_name = "trs_keypair_from_hash"]
-pub extern "C" fn trs_keypair_from_hash(hash_bytes: &mut [u8; 32], private_key: &mut [u8; 32], public_key: &mut [u8; 32]) {
+pub fn trs_keypair_from_hash(hash_bytes: &mut [u8; 32], private_key: &mut [u8; 32], public_key: &mut [u8; 32]) {
     // Hash the hash_bytes using a cryptographic hash function (e.g., Blake2b)
     let mut h = Blake2b::with_params(b"", b"", DOMAIN_STR0);
     h.update(hash_bytes);
@@ -105,9 +106,7 @@ pub extern "C" fn trs_keypair_from_hash(hash_bytes: &mut [u8; 32], private_key: 
     *private_key = scalar.as_bytes().to_owned();
 }
 
-#[no_mangle]
-#[export_name = "trs_generate_keypair"]
-pub extern "C" fn trs_generate_keypair(private_key: &mut [u8; 32], public_key: &mut [u8; 32]) {
+pub fn trs_generate_keypair(private_key: &mut [u8; 32], public_key: &mut [u8; 32]) {
     let mut rng = rand::thread_rng();
     let s = Scalar::random(&mut rng);
     let pubkey = PublicKey(&s * &RISTRETTO_BASEPOINT_POINT);
@@ -116,9 +115,7 @@ pub extern "C" fn trs_generate_keypair(private_key: &mut [u8; 32], public_key: &
     *private_key = s.as_bytes().to_owned();
 }
 
-#[no_mangle]
-#[export_name = "trs_keypair_from_seed"]
-pub extern "C" fn trs_keypair_from_seed(private_key: &mut [u8; 32], public_key: &mut [u8; 32]) {
+pub fn trs_keypair_from_seed(private_key: &mut [u8; 32], public_key: &mut [u8; 32]) {
     let scalar = Scalar::from_canonical_bytes(*private_key);
     let pubkey = PublicKey(&scalar.unwrap() * &RISTRETTO_BASEPOINT_POINT);
     (*public_key).copy_from_slice(&pubkey.as_bytes());
@@ -156,6 +153,7 @@ impl Tag {
     }
 
     // 3 independent hash functions
+    // szhou: are these hash functions that can be used anywhere after we initialize a Tag?
 
     fn hash0(&self) -> Blake2b {
         let h = Blake2b::with_params(b"", b"", DOMAIN_STR0);
@@ -208,7 +206,7 @@ pub(crate) fn compute_sigma(
 }
 
 pub fn sign<R: RngCore + CryptoRng>(
-    rng: &mut R,
+    rng: &mut R, // szhou: why do we need this
     msg: &[u8],
     tag: &Tag,
     privkey: &PrivateKey,
@@ -333,9 +331,7 @@ pub fn sign<R: RngCore + CryptoRng>(
     }
 }
 
-#[no_mangle]
-#[export_name = "trs_sign"]
-pub extern "C" fn trs_sign(set_publickey: *const u8, set_publickey_len: usize, secret_key: &mut [u8; 64], issue: &mut [u8; 32], msg: &mut [u8; 32], a_1: &mut [u8; 32], c_n: *mut u8, z_n: *mut u8) {
+pub fn trs_sign(set_publickey: *const u8, set_publickey_len: usize, secret_key: &mut [u8; 64], issue: &mut [u8; 32], msg: &mut [u8; 32], a_1: &mut [u8; 32], c_n: *mut u8, z_n: *mut u8) {
     let set_pk = unsafe { std::slice::from_raw_parts(set_publickey, set_publickey_len) };
     let chunks = set_pk.chunks_exact(32);
     let pubkeys: Vec<PublicKey> = chunks
@@ -421,9 +417,7 @@ pub fn verify(msg: &[u8], tag: &Tag, sig: &Signature) -> bool {
     sum == cc
 }
 
-#[no_mangle]
-#[export_name = "trs_verify"]
-pub extern "C" fn trs_verify(set_publickey: *const u8, set_publickey_len: usize, issue: &mut [u8; 32], msg: &mut [u8; 32], a_1: &mut [u8; 32], c_n: *const u8, z_n: *const u8) -> bool {
+pub fn trs_verify(set_publickey: *const u8, set_publickey_len: usize, issue: &mut [u8; 32], msg: &mut [u8; 32], a_1: &mut [u8; 32], c_n: *const u8, z_n: *const u8) -> bool {
     let set_pk = unsafe { std::slice::from_raw_parts(set_publickey, set_publickey_len) };
     let _ring_size = set_publickey_len / 32;
     let chunks = set_pk.chunks_exact(32);
@@ -454,9 +448,27 @@ pub extern "C" fn trs_verify(set_publickey: *const u8, set_publickey_len: usize,
     verify(&*msg, &tag, &signature)
 }
 
-#[no_mangle]
-#[export_name = "trs_trace"]
-pub extern "C" fn trs_trace(set_publickey: *const u8, set_publickey_len: usize, issue: &mut [u8; 32], msg1: &mut [u8; 32],msg2: &mut [u8; 32], a_11: &mut [u8; 32],a_12: &mut [u8; 32], c_n1: *const u8,c_n2: *const u8, z_n1: *const u8, z_n2: *const u8) -> i32 {
+pub fn trace(tag: &Tag, msg1: &[u8], msg2: &[u8], sig1: &Signature, sig2: &Signature) -> i32 {
+    let (_, sigma1) = compute_sigma(msg1, tag, sig1);
+    let (_, sigma2) = compute_sigma(msg2, tag, sig2);
+    let intersecting_points = (0..(tag.pubkeys.len()))
+        .filter(|&i| sigma1[i] == sigma2[i])
+        .collect::<Vec<usize>>();
+    let mut check = intersecting_points.len() as i32;
+    if check == tag.pubkeys.len() as i32 {
+        check = -1;
+        println!("These signatures are linked.");
+    } else if check == 1 {
+        check = intersecting_points[0] as i32;
+        println!("These signatures are traceable, and the signer is {}.", check);
+    } else {
+        check = -2;
+        println!("These signatures are independent.");
+    }
+    check
+}
+
+pub fn trs_trace(set_publickey: *const u8, set_publickey_len: usize, issue: &mut [u8; 32], msg1: &mut [u8; 32],msg2: &mut [u8; 32], a_11: &mut [u8; 32],a_12: &mut [u8; 32], c_n1: *const u8,c_n2: *const u8, z_n1: *const u8, z_n2: *const u8) -> i32 {
     let set_pk = unsafe { std::slice::from_raw_parts(set_publickey, set_publickey_len) };
     let _ring_size = set_publickey_len / 32;
     let chunks = set_pk.chunks_exact(32);
@@ -499,26 +511,26 @@ pub extern "C" fn trs_trace(set_publickey: *const u8, set_publickey_len: usize, 
         Scalar::from_bytes_mod_order(arr)
     }).collect();
     let signature2 = Signature{ aa1:aa12, cs:cs2, zs:zs2 };
-    let (_, sigma1) = compute_sigma(msg1, &tag, &signature1);
-    let (_, sigma2) = compute_sigma(msg2, &tag, &signature2);
-    let intersecting_points = (0..(tag.pubkeys.len()))
-    .filter(|&i| sigma1[i] == sigma2[i])
-    .collect::<Vec<usize>>();
-    let mut check = intersecting_points.len() as i32;
-    if check == 0 {
-        check = -1;
-    } else if check == 1 {
-        check = intersecting_points[0] as i32;
-    } else {
-        check = -2;
-    }
-    check
+
+    trace(&tag, &*msg1, &*msg2, &signature1, &signature2)
+
+    // let (_, sigma1) = compute_sigma(msg1, &tag, &signature1);
+    // let (_, sigma2) = compute_sigma(msg2, &tag, &signature2);
+    // let intersecting_points = (0..(tag.pubkeys.len()))
+    // .filter(|&i| sigma1[i] == sigma2[i])
+    // .collect::<Vec<usize>>();
+    // let mut check = intersecting_points.len() as i32;
+    // if check == 0 {
+    //     check = -1;
+    // } else if check == 1 {
+    //     check = intersecting_points[0] as i32;
+    // } else {
+    //     check = -2;
+    // }
+    // check
 }
 
-
-#[no_mangle]
-#[export_name = "ed25519_sign_rust"]
-pub extern "C" fn ed25519_sign_rust(private_key: &mut [u8; 32], msg: *const u8, msg_len: usize, signature: &mut [u8; 64]) {
+pub fn ed25519_sign_rust(private_key: &mut [u8; 32], msg: *const u8, msg_len: usize, signature: &mut [u8; 64]) {
     let scalar = match Scalar::from_canonical_bytes(*private_key) {
         Some(scalar) => scalar,
         None => return, // Return or handle the error here
@@ -551,9 +563,7 @@ pub extern "C" fn ed25519_sign_rust(private_key: &mut [u8; 32], msg: *const u8, 
 
 use arrayref::array_ref;
 
-#[no_mangle]
-#[export_name = "ed25519_verify_rust"]
-pub extern "C" fn ed25519_verify_rust(
+pub fn ed25519_verify_rust(
     public_key: &[u8; 32],
     msg: *const u8,
     msg_len: usize,
@@ -582,3 +592,49 @@ pub extern "C" fn ed25519_verify_rust(
     // Check if P1 equals P2
     p1 == p2
 } 
+
+// TODO(szhou): make this into a test module
+#[test]
+fn test_minimal_keygen_roundtrip() {
+    // 1. Generate a random scalar (private key)
+    let mut rng = rand::thread_rng();
+    let s = Scalar::random(&mut rng);
+
+    // 2. Compute the public key as a RistrettoPoint
+    let point: RistrettoPoint = &s * &RISTRETTO_BASEPOINT_POINT;
+
+    // 3. Compress to bytes
+    let pubkey = PublicKey(point);
+    let compressed: CompressedRistretto = point.compress();
+    let bytes: [u8; 32] = compressed.to_bytes();
+    let pubkey_bytes = pubkey.as_bytes();
+    assert_eq!(bytes.to_vec(), pubkey_bytes);
+
+    println!("Compressed public key bytes: {:?}", bytes);
+
+    // 4. Decompress back into a RistrettoPoint
+    let decompressed: Option<RistrettoPoint> = CompressedRistretto(bytes).decompress();
+
+    match decompressed {
+        Some(p) => {
+            println!("Successfully decompressed!");
+            assert_eq!(point, p); // ✅ round trip works
+        }
+        None => {
+            println!("Decompression failed ❌");
+        }
+    }
+}
+
+
+#[test]
+fn test_keygen() {
+    // 1. Generate a public and private key with the library function
+    let mut pubkey_bytes = [0u8; 32];
+    let mut privkey_bytes = [0u8; 32];
+    trs_generate_keypair(&mut privkey_bytes, &mut pubkey_bytes); // szhou: this function seems to be cooked :skull:
+
+    // 2. Check that extraction works // szhou: LOL doesn't work
+    let pubkey = PublicKey::from_bytes(&pubkey_bytes);
+    assert!(pubkey.is_some());
+}
