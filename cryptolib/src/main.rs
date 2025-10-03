@@ -6,7 +6,7 @@ use std::time::Instant;
 fn main() {
     let start = Instant::now(); // start the timer
     println!("Timing TRS functions...");
-    
+
     // 1. Key generation
     let ring_size = 3;
     let mut set_publickey = vec![[0u8; 32]; ring_size];
@@ -40,7 +40,7 @@ fn main() {
 
     println!("======== Signing and verifying... ========");
 
-    let mut R = OsRng;
+    let mut R = OsRng; // what is R used for again
     let sig1 = sign(&mut R, &msg1, &tag, &PrivateKey::from_bytes(&secretkey).unwrap());
     println!("Message 1 signed with secretkey 0.");
     println!("Verifying sig1 ...{}", verify(&msg1, &tag, &sig1));

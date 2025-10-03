@@ -1,2 +1,2 @@
-cryptolib/src/target/*
+cryptolib/src/target/
 *.DS_Store*

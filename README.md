@@ -1,1 +1,1 @@
-This code is adapted from TRSVote. It was noted in that repository though that this code should not be used in real life :sob:. Why is is that this can't be used? 
+This code is adapted from [TRSVote](https://github.com/airlanggasusanto/TRS-Vote).

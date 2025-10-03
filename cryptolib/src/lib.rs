@@ -121,7 +121,7 @@ pub fn trs_keypair_from_seed(private_key: &mut [u8; 32], public_key: &mut [u8; 3
     (*public_key).copy_from_slice(&pubkey.as_bytes());
 }
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub struct Signature {
     aa1: RistrettoPoint,
     cs: Vec<Scalar>,
