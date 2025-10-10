@@ -3,7 +3,7 @@ use trs::*;
 use std::time::Instant;
 
 // This function times the functions in lib.rs
-fn main() {
+fn main(){
     let start = Instant::now(); // start the timer
     println!("Timing TRS functions...");
 

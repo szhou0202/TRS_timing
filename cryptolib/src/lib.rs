@@ -3,6 +3,8 @@ use curve25519_dalek::{
     traits::Identity,};
 
 use core::convert::TryFrom;
+use std::fs::File;
+use std::io::{self, Write, BufRead};
 
 use blake2::{digest::Update, Blake2b};
 
@@ -11,6 +13,8 @@ use rand_core::{CryptoRng, RngCore};
 static DOMAIN_STR0: &'static [u8] = b"rust-ringsig-0";
 static DOMAIN_STR1: &'static [u8] = b"rust-ringsig-1";
 static DOMAIN_STR2: &'static [u8] = b"rust-ringsig-2";
+
+pub const RING_SIZES: [usize; 7] = [16, 32, 64, 128, 256, 512, 1024];
 
 // A public key
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -34,10 +38,6 @@ impl PublicKey {
         let c = CompressedRistretto(arr);
         c.decompress().map(|p| PublicKey(p))
     }
-
-    // pub fn from_point(p: RistrettoPoint) -> Self {
-    //     PublicKey(p)
-    // }
 }
 
 /// A private key
@@ -638,3 +638,141 @@ fn test_keygen() {
     let pubkey = PublicKey::from_bytes(&pubkey_bytes);
     assert!(pubkey.is_some());
 }
+
+// functions for benchmarking
+// TODO: put these into a module
+pub fn generate_keys_and_message(ring_size: usize) -> (Vec<[u8;32]>, Vec<[u8;32]>, Tag, Vec<u8>){
+    // generate n keys 
+    let mut set_publickey = vec![[0u8; 32]; ring_size];
+    let mut set_secretkey = vec![[0u8; 32]; ring_size];
+
+    for i in 0..ring_size {
+        let public_key = &mut set_publickey[i]; // &mut Vec<u8> of length 32
+        let secret_key = &mut set_secretkey[i]; // &mut Vec<u8> of length 32
+
+        trs_generate_keypair(secret_key, public_key);
+    }
+
+    // create a tag
+    let issue = vec![0u8; 32];
+    let mut pubkeys = Vec::new();
+    for i in 0..ring_size {
+        let public_key= PublicKey::from_bytes(&set_publickey[i]).unwrap();
+        pubkeys.push(public_key);
+    }
+    let tag = Tag{issue, pubkeys};
+
+    // everyone signs the same message // TODO: message size also impacts this probably
+    let msg = vec![1u8; 32];
+    (set_publickey, set_secretkey, tag, msg)
+}
+
+pub fn proof_time(ring_size: usize, set_publickey: Vec<[u8;32]>, set_secretkey: Vec<[u8;32]>, tag: Tag, msg: Vec<u8>) -> Vec<Signature> {
+    // Times the signing of messages, in other words, proof generation time 
+    // a bunch of users sign the same message
+
+    // PrivateKey expects the scalar concatenated with the public key
+    let mut rng = rand::thread_rng(); // szhou: what is this used for again???
+
+    let mut sigs = Vec::new();
+    // for i in 0..ring_size {
+    let secretkey = [&set_secretkey[0][..], &set_publickey[0][..]].concat();
+    // sign(&mut rng, &msg, &tag, &PrivateKey::from_bytes(&secretkey).unwrap())
+    sigs.push(sign(&mut rng, &msg, &tag, &PrivateKey::from_bytes(&secretkey).unwrap()));
+    // }
+    sigs
+}
+
+pub fn verification_time(msg: Vec<u8>, tag: Tag, sigs: Vec<Signature>, ring_size: usize) {
+    // Times the verification of messages, in other words, proof verification time 
+    // a bunch of users sign the same message
+    // for i in 0..ring_size {
+    verify(&msg, &tag, &sigs[0]);
+    // }
+}
+
+pub fn generation_time(ring_size: usize) {
+    // Times the keys and tag generation time
+    
+    // generate n keys 
+    generate_keys_and_message(ring_size);
+}
+
+// benchmarking proof size
+#[test]
+fn proof_size() -> io::Result<()> { 
+    use std::mem;
+
+    let mut points = Vec::new();
+
+    for &n in &RING_SIZES {
+        let tup = generate_keys_and_message(n);
+        let set_publickey = tup.0;
+        let set_secretkey = tup.1;
+        let tag = tup.2;
+        let msg = tup.3;
+
+        let sigs = proof_time(n, set_publickey.clone(), set_secretkey.clone(), tag.clone(), msg.clone());
+        let sig = &sigs[0];
+
+        // NOTE: mem::size_of_val(&sig.aa1) = mem::size_of::<RistrettoPoint>() = 160 bytes
+        let total_size = mem::size_of_val(&sig.aa1) + sig.cs.len()*mem::size_of_val(&sig.cs[0]) + sig.zs.len()*mem::size_of_val(&sig.zs[0]);
+        println!("Ring size: {}, Proof size: {} bytes", n, total_size);
+        points.push((n as i32, total_size as f64));
+    }
+
+    // write to csv
+    let mut file = File::create("proof_sizes.csv")?;
+    writeln!(file, "ring_size,proof_size")?;
+
+    for (x,y) in &points {
+        writeln!(file, "{},{}", x, y)?;
+    }
+
+    println!("CSV written to proof_sizes.csv");
+    Ok(())
+}
+
+// NOTE: this function assumes that proof_sizes.csv already exists
+// NOTE: just decided to plot through google sheets
+// pub fn plot_proof_size() -> Result<(), Box<dyn std::error::Error>> {
+//     use plotters::prelude::*;
+
+//     let mut points = Vec::new();
+//     let file = File::open("proof_sizes.csv")?;
+//     for line in io::BufReader::new(file).lines() {
+//         let line = line?;
+//         let parts: Vec<&str> = line.split(',').collect();
+//         if parts[0] == "ring_size" { continue } // skip header
+//         let ring_size: f64 = parts[0].parse().unwrap();
+//         let proof_size: f64 = parts[1].parse().unwrap();
+//         println!("Ring size: {}, Proof size: {}", ring_size, proof_size);
+//         points.push((ring_size as i32, proof_size));
+//     }
+
+//     // NOTE: this is all from GPT
+//     let root = BitMapBackend::new("proof_size.png", (640, 480)).into_drawing_area();
+//     root.fill(&WHITE)?;
+
+//     let mut chart = ChartBuilder::on(&root)
+//         .caption("Proof size vs ring size", ("sans-serif", 30))
+//         .margin(20)
+//         .x_label_area_size(40)
+//         .y_label_area_size(40)
+//         .build_cartesian_2d(0..1024, 0f64..70000f64)?;
+
+//     chart.configure_mesh()
+//     .x_desc("Ring size")
+//     .y_desc("Proof size (bytes)").draw()?;
+
+//     chart.draw_series(LineSeries::new(
+//         points.clone(),
+//         &RED,
+//     ))?
+//     .label("Proof size (bytes)")
+//     .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
+
+//     chart.configure_series_labels().border_style(&BLACK).draw()?;
+
+//     Ok(())
+// }
