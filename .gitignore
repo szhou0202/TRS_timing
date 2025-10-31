@@ -1,3 +1,4 @@
-cryptolib/target/
+TRS/target/
 *.DS_Store*
 ASC/target/
+target/*

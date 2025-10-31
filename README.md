@@ -1,1 +1,1 @@
-This code is adapted from [TRSVote](https://github.com/airlanggasusanto/TRS-Vote).
+This code is adapted from [TRSVote](https://github.com/airlanggasusanto/TRS-Vote) and [lirisi](https://github.com/zbohm/lirisi). 
