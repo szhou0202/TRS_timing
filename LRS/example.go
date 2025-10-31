@@ -9,7 +9,9 @@ import (
 	"fmt"
 	"hash"
 	"log"
+	"reflect"
 	"time"
+	"unsafe"
 
 	"github.com/zbohm/lirisi/client"
 	"github.com/zbohm/lirisi/ring"
@@ -141,19 +143,23 @@ func foldedKeysExample(privateKey *ecdsa.PrivateKey, foldedPublicKeys, signature
 
 func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	gtimes := RunTenTimesAndAverage(GenerateTime)
+	// gtimes := RunTenTimesAndAverage(GenerateTime)
+	// for i := range ring_sizes {
+	// 	fmt.Printf("%.1f\n", gtimes[i])
+	// }
+	// fmt.Printf("\n")
+	// stimes := RunTenTimesAndAverage(SignTime)
+	// for i := range ring_sizes {
+	// 	fmt.Printf("%.1f\n", stimes[i])
+	// }
+	// fmt.Printf("\n")
+	// vtimes := RunTenTimesAndAverage(VerifyTime)
+	// for i := range ring_sizes {
+	// 	fmt.Printf("%.1f\n", vtimes[i])
+	// }
+	sizes := SignatureSizes()
 	for i := range ring_sizes {
-		fmt.Printf("%.1f\n", gtimes[i])
-	}
-	fmt.Printf("\n")
-	stimes := RunTenTimesAndAverage(SignTime)
-	for i := range ring_sizes {
-		fmt.Printf("%.1f\n", stimes[i])
-	}
-	fmt.Printf("\n")
-	vtimes := RunTenTimesAndAverage(VerifyTime)
-	for i := range ring_sizes {
-		fmt.Printf("%.1f\n", vtimes[i])
+		fmt.Printf("%d\n", sizes[i])
 	}
 }
 
@@ -272,4 +278,124 @@ func RunTenTimesAndAverage(funcToTime func() []time.Duration) []float64 {
 		log.Fatal(err)
 	}
 	return avgTimes
+}
+
+func SignatureSizes() []uint64 {
+	sizes := make([]uint64, 0)
+
+	for _, size := range ring_sizes {
+		publicKeys, privateKeys := CreateNKeys(size)
+		message := []byte("Hello world!")
+		caseIdentifier := []byte("Round Nr.1")
+
+		// Count size of signature.
+		// old := debug.SetGCPercent(-1) // freeze GC pacing
+		// defer debug.SetGCPercent(old)
+
+		// runtime.GC()
+		// debug.FreeOSMemory()
+		// var before runtime.MemStats
+		// runtime.ReadMemStats(&before)
+
+		_, signature := ring.Create(elliptic.P256, ring.HashCodes["sha3-256"], privateKeys[0], publicKeys, message, caseIdentifier)
+		diff := DeepSize(signature)
+		// runtime.GC()
+		// debug.FreeOSMemory()
+		// var after runtime.MemStats
+		// runtime.ReadMemStats(&after)
+		// runtime.KeepAlive(signature)
+
+		// diff := int64(after.Alloc) - int64(before.Alloc)
+
+		sizes = append(sizes, uint64(diff))
+	}
+	return sizes
+}
+
+// szhou: This function is from ChatGPT
+func DeepSize(v any) uintptr {
+	seen := make(map[unsafe.Pointer]struct{})
+
+	var deepSize func(reflect.Value) uintptr
+	var heapOnly func(reflect.Value) uintptr
+
+	deepSize = func(rv reflect.Value) uintptr {
+		if !rv.IsValid() {
+			return 0
+		}
+		// Count this value's own header/inline bytes once
+		return rv.Type().Size() + heapOnly(rv)
+	}
+
+	heapOnly = func(rv reflect.Value) uintptr {
+		switch rv.Kind() {
+
+		case reflect.Ptr:
+			if rv.IsNil() {
+				return 0
+			}
+			p := unsafe.Pointer(rv.Pointer())
+			if _, ok := seen[p]; ok {
+				return 0
+			}
+			seen[p] = struct{}{}
+			// Do NOT add pointer header (parent already counted); add pointee deep size.
+			return deepSize(rv.Elem())
+
+		case reflect.Struct:
+			// Struct inline bytes already counted by parent; only add heap parts of fields.
+			var sum uintptr
+			for i := 0; i < rv.NumField(); i++ {
+				sum += heapOnly(rv.Field(i))
+			}
+			return sum
+
+		case reflect.Slice:
+			if rv.IsNil() {
+				return 0
+			}
+			// Slice header was counted by parent; add backing array (and deeper).
+			dataPtr := unsafe.Pointer(rv.Pointer()) // first element
+			if dataPtr != nil {
+				if _, ok := seen[dataPtr]; ok {
+					// already accounted this backing store
+				} else {
+					seen[dataPtr] = struct{}{}
+					n := rv.Len()
+					elem := rv.Type().Elem()
+					if elem.Kind() == reflect.Uint8 { // []byte fast path
+						return uintptr(n)
+					}
+					var sum uintptr
+					for i := 0; i < n; i++ {
+						sum += deepSize(rv.Index(i))
+					}
+					return sum
+				}
+			}
+			return 0
+
+		case reflect.Array:
+			// Array inline bytes were counted by parent; recurse into elements for heap parts.
+			var sum uintptr
+			for i := 0; i < rv.Len(); i++ {
+				sum += heapOnly(rv.Index(i))
+			}
+			return sum
+
+		case reflect.String:
+			// String header was counted by parent; add backing bytes only.
+			return uintptr(rv.Len())
+
+		case reflect.Map, reflect.Chan, reflect.Func, reflect.UnsafePointer:
+			// Internals are runtime-private; treat as header-only (which parent counted).
+			return 0
+
+		default:
+			// Scalars, bools, etc. have no heap part.
+			return 0
+		}
+	}
+
+	return deepSize(reflect.ValueOf(v))
 }
