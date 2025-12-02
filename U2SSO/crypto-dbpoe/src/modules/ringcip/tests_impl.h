@@ -215,6 +215,7 @@ int test_ringcip(void) {
 
 
 int test_boquila_bench(void) {
+    printf("test_boquila_bench\n");
     int L = 10;
     int n = 2;
     int m = 10;
@@ -291,8 +292,8 @@ int test_boquila_bench(void) {
         N *= rctx.n;
 
         printf("%d, %d, %d, "
-           "prove_mean=%f, prove_std=%f, "
-           "verify_mean=%f, verify_std=%f\n",
+           "%.3f+%.3f, "
+           "%.3f+%.3f\n",
            N, m, secp256k1_zero_mcom_get_size(&rctx, m),
            prove_mean, prove_stddev,
            verify_mean, verify_stddev);
@@ -304,6 +305,7 @@ int test_boquila_bench(void) {
 
 
 int test_boquila_3_bench(void) {
+    printf("test_boquila_3_bench\n");
     int L = 10;
     int n = 3;
     int m = 6;
@@ -379,8 +381,8 @@ int test_boquila_3_bench(void) {
         N *= rctx.n;
 
         printf("%d, %d, %d, "
-           "prove_mean=%f, prove_std=%f, "
-           "verify_mean=%f, verify_std=%f\n",
+           "%.3f+%.3f, "
+           "%.3f+%.3f\n",
            N, m, secp256k1_zero_mcom_get_size(&rctx, m),
            prove_mean, prove_stddev,
            verify_mean, verify_stddev);
@@ -389,6 +391,7 @@ int test_boquila_3_bench(void) {
 }
 
 int test_boquila_DBPoE_bench(void) {
+    printf("test_boquila_DBPoE_bench\n");
     int L = 10;
     int n = 2;
     int m = 10;
@@ -481,9 +484,7 @@ int test_boquila_DBPoE_bench(void) {
 
             N *= rctx.n;
 
-            // your existing columns + the new mean/std columns
-            // (CSV friendly: N, m, proof_size, prove_mean, prove_std, verify_mean, verify_std, topic_size)
-            printf("%d, %d, %d, %f, %f, %f, %f, %d\n",
+            printf("%d, %d, %d, %.3f+%.3f, %.3f+%.3f, %d\n",
                 N, m, secp256k1_zero_mcom_DBPoE_get_size(&rctx, m),
                 prove_mean, prove_stddev,
                 verify_mean, verify_stddev,
@@ -496,6 +497,7 @@ int test_boquila_DBPoE_bench(void) {
 
 
 int test_boquila_DBPoE_topic_bench(void) {
+    printf("test_boquila_DBPoE_topic_bench\n");
     int L = 10;
     int n = 3;
     int m = 6;
@@ -589,9 +591,7 @@ int test_boquila_DBPoE_topic_bench(void) {
 
             N *= rctx.n;
 
-            // your existing columns + the new mean/std columns
-            // (CSV friendly: N, m, proof_size, prove_mean, prove_std, verify_mean, verify_std, topic_size)
-            printf("%d, %d, %d, %f, %f, %f, %f, %d\n",
+            printf("%d, %d, %d, %.3f+%.3f, %.3f+%.3f, %d\n",
                 N, m, secp256k1_zero_mcom_DBPoE_get_size(&rctx, m),
                 prove_mean, prove_stddev,
                 verify_mean, verify_stddev,

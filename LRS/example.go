@@ -149,7 +149,7 @@ func main() {
 	// 	fmt.Printf("%.1f\n", gtimes[i])
 	// }
 	fmt.Printf("\n")
-	fmt.Printf("singing time")
+	fmt.Printf("signing time")
 	stimes, stds := RunTenTimesAndAverage(SignTime)
 	for i := range ring_sizes {
 		fmt.Printf("%.3f+%.3f\n", stimes[i], stds[i])

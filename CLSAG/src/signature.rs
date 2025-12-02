@@ -252,6 +252,7 @@ mod test {
 
     #[test]
     fn bench_verify() {
+        println!("verify time");
         let num_keys = 2;
 
         let ring_sizes = [7,15,31,63,127,255,511,1023];
@@ -286,12 +287,13 @@ mod test {
 
             let std_dev: f64 = variance.sqrt();
 
-            eprintln!("ms: {}+{:.3}", mean, std_dev);
+            println!("ms: {}+{:.3}", mean, std_dev);
         }
     }
 
     #[test]
     fn bench_sign() {
+        println!("sign time");
         let num_keys = 2;
 
         let ring_sizes = [7,15,31,63,127,255,511,1023];
@@ -325,12 +327,13 @@ mod test {
 
             let std_dev: f64 = variance.sqrt();
 
-            eprintln!("ms: {}+{:.3}", mean, std_dev);
+            println!("ms: {}+{:.3}", mean, std_dev);
         }
     }
 
     #[test]
     fn bench_size() {
+        println!("proof size");
         let num_keys = 2;
 
         let ring_sizes = [7,15,31,63,127,255,511,1023];
@@ -342,7 +345,7 @@ mod test {
             clsag.add_member(generate_signer(num_keys));
             
             let sig = clsag.sign(msg).unwrap();
-            eprintln!("{}", sig.signature_size());
+            println!("{}", sig.signature_size());
         }
     }
 

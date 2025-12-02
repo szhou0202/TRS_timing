@@ -1,0 +1,463 @@
+CLSAG
+
+
+running 2 tests
+sign time
+test clsag::test::bench_sign ... ok
+ms: 11.7+1.337
+ms: 22.2+0.422
+ms: 47.8+0.632
+ms: 108.7+2.710
+ms: 265.3+3.466
+ms: 749.6+96.838
+ms: 2293.4+175.098
+test signature::test::bench_sign has been running for over 60 seconds
+ms: 7737.9+136.486
+test signature::test::bench_sign ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10 filtered out; finished in 112.67s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+
+running 1 test
+verify time
+ms: 10.6+1.075
+ms: 21+0.000
+ms: 46.1+0.316
+ms: 104.7+4.715
+ms: 256.8+1.932
+ms: 731.7+92.602
+ms: 2246.9+150.665
+test signature::test::bench_verify has been running for over 60 seconds
+ms: 7586+144.311
+test signature::test::bench_verify ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 121.60s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+
+running 1 test
+proof size
+400
+656
+1168
+2192
+4240
+8336
+16528
+32912
+test signature::test::bench_size ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 10.96s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+DualDory
+
+>>> 2, 31+16.090, 36+19.264
+>>> 4, 53+27.889, 54+28.304
+>>> 8, 80+41.497, 68+35.526
+>>> 16, 129+66.622, 82+41.855
+>>> 32, 210+108.313, 92+47.209
+>>> 64, 364+186.695, 100+52.198
+>>> 128, 665+341.380, 106+55.319
+>>> 256, 1259+646.049, 124+63.584
+>>> 512, 2426+1244.285, 131+67.273
+>>> 1024, 4740+2431.492, 127+66.058
+Sizes:
+(2, 8412)(4, 15548)(8, 22684)(16, 29820)(32, 36956)(64, 44092)(128, 51228)(256, 58364)(512, 65500)(1024, 72637)
+Pre-processing:
+(2, 9)(4, 21)(8, 39)(16, 75)(32, 147)(64, 284)(128, 572)(256, 1115)(512, 2222)(1024, 4441)
+Signing:
+(2, 31, 16.090)(4, 53, 27.889)(8, 80, 41.497)(16, 129, 66.622)(32, 210, 108.313)(64, 364, 186.695)(128, 665, 341.380)(256, 1259, 646.049)(512, 2426, 1244.285)(1024, 4740, 2431.492)
+dualring+dory:
+(2, 32)(4, 49)(8, 76)(16, 122)(32, 206)(64, 362)(128, 666)(256, 1250)(512, 2426)(1024, 4743)
+Append tag:
+(2, 1686)(4, 1883)(8, 1543)(16, 2079)(32, 1968)(64, 2031)(128, 2277)(256, 2222)(512, 2456)(1024, 2582)
+Verify:
+(2, 36, 19.264)(4, 54, 28.304)(8, 68, 35.526)(16, 82, 41.855)(32, 92, 47.209)(64, 100, 52.198)(128, 106, 55.319)(256, 124, 63.584)(512, 131, 67.273)(1024, 127, 66.058)
+LRS
+
+
+signing time1.000+0.000
+3.000+0.000
+6.000+0.000
+12.100+0.316
+25.700+0.675
+57.600+0.699
+136.500+0.850
+362.800+5.808
+
+verify time1.100+0.316
+2.900+0.316
+5.900+0.316
+12.000+0.000
+25.600+0.516
+57.200+1.033
+135.700+0.483
+359.800+2.201
+881
+1328
+2225
+4017
+7601
+14767
+29103
+57775
+Raptor
+
+Backed up original param.h to param.h.orig.ouoONE
+========================================
+⇒ Setting NOU = 8
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 8)...
+keygen (ms) :8635.400
+sign (ms) :1.343+0.055
+verify (ms) :0.950+0.026
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+⇒ Setting NOU = 16
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 16)...
+keygen (ms) :8488.700
+sign (ms) :1.324+0.044
+verify (ms) :0.942+0.010
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+⇒ Setting NOU = 32
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 32)...
+keygen (ms) :8711.600
+sign (ms) :1.382+0.058
+verify (ms) :0.973+0.033
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+⇒ Setting NOU = 64
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 64)...
+keygen (ms) :8564.600
+sign (ms) :1.344+0.024
+verify (ms) :0.954+0.014
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+⇒ Setting NOU = 128
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 128)...
+keygen (ms) :8505.800
+sign (ms) :1.333+0.015
+verify (ms) :0.945+0.009
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+⇒ Setting NOU = 256
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 256)...
+keygen (ms) :9078.200
+sign (ms) :1.758+0.849
+verify (ms) :1.110+0.479
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+⇒ Setting NOU = 512
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 512)...
+keygen (ms) :8511.700
+sign (ms) :1.345+0.036
+verify (ms) :0.945+0.015
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+⇒ Setting NOU = 1024
+⇒ Building...
+make: Nothing to be done for `all'.
+⇒ Running tests (NOU = 1024)...
+keygen (ms) :9088.800
+sign (ms) :1.412+0.053
+verify (ms) :1.001+0.045
+proof size (B): 132626
+Linkable Raptor: next generation of Falcon with stealth mode
+========================================
+Restoring original param.h
+Done.
+TRS
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 1 test
+proof time
+n: 16, ms: 23.6+0.966
+n: 32, ms: 46+0.000
+n: 64, ms: 93+0.000
+n: 128, ms: 188.8+7.510
+n: 256, ms: 375+4.163
+n: 512, ms: 752.3+7.364
+n: 1024, ms: 1499.6+2.875
+test proof_time_bench ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 30.46s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 1 test
+trace time
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+n: 16, ms: 9+0.000
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+n: 32, ms: 18+0.000
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+n: 64, ms: 37.6+1.265
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+n: 128, ms: 74.1+1.792
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+n: 256, ms: 148.5+1.958
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+n: 512, ms: 296.2+2.486
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+These signatures are linked.
+n: 1024, ms: 616.8+47.737
+test trace_time_bench ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 18.67s
+
+
+running 1 test
+test proof_size ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 3.67s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+U2SSO
+
+snark
+
+
+> boquila@1.0.0 test
+> mocha --exit
+
+
+
+  Boquila
+    Verifying auth proofs
+      ✔ should generate valid signatures (131ms)
+    Verifying auth proofs for service keys
+      ✔ should generate valid signatures (119ms)
+    Verifying auth proofs for service keys
+      ✔ should generate valid signatures (138ms)
+    Verifying membership proofs
+      ✔ should generate valid proofs (502ms)
+    Verifying the consistency of the nullifier
+      ✔ Should output the same nullifier even with 2 different groups (524ms)
+    #deriveWebKeys
+      ✔ should derive web key (140ms)
+    #deriveChildSecretKey
+      ✔ should derive child secret key
+    #deriveChildPublicKey
+      ✔ should derive child public key (124ms)
+    #ProveMPKMemb/VerifyMPKMemb
+      ✔ should prove and verify MPK Membership (538ms)
+    Proving time and verification time for membership proofs
+group size: 8, 261.788+12.055, 9.86+0.461, 1552.4+2.951
+group size: 16, 279.82+10.81, 10.288+1.532, 1553+2.357
+group size: 32, 287.742+9.246, 9.536+0.407, 1552.8+3.553
+group size: 64, 303.348+8.694, 10.995+1.757, 1554.2+2.394
+group size: 128, 327.281+15.846, 9.599+0.53, 1551+4.738
+group size: 256, 333.382+12.654, 10.752+1.242, 1552.8+3.011
+group size: 512, 358.505+15.801, 9.415+0.605, 1553.6+2.271
+group size: 1024, 365.696+13.094, 9.387+0.441, 1554.4+3.627
+      ✔ should generate valid proofs (66681ms)
+
+
+  10 passing (1m)
+
+dbpoe
+
+test count = 64
+random seed = 740be89a1ab51eb26922f7cb0f33b1a3
+passed ring cip tests for ring sizes that are not power of n
+test_boquila_bench
+16, 3, 423, 0.004+0.000, 0.002+0.000
+32, 4, 488, 0.007+0.000, 0.003+0.000
+64, 5, 553, 0.015+0.000, 0.005+0.000
+128, 6, 618, 0.031+0.000, 0.007+0.000
+256, 7, 683, 0.068+0.000, 0.013+0.000
+512, 8, 748, 0.151+0.001, 0.022+0.000
+1024, 9, 813, 0.333+0.001, 0.042+0.000
+test_boquila_3_bench
+27, 2, 422, 0.003+0.000, 0.002+0.000
+81, 3, 519, 0.009+0.000, 0.004+0.000
+243, 4, 616, 0.027+0.000, 0.009+0.000
+729, 5, 713, 0.091+0.000, 0.021+0.000
+test_boquila_DBPoE_bench
+16, 3, 3591, 0.025+0.000, 0.009+0.000, 100
+32, 4, 3656, 0.036+0.000, 0.010+0.000, 100
+64, 5, 3721, 0.052+0.001, 0.012+0.000, 100
+128, 6, 3786, 0.074+0.000, 0.015+0.000, 100
+256, 7, 3851, 0.119+0.001, 0.021+0.000, 100
+512, 8, 3916, 0.216+0.002, 0.032+0.000, 100
+1024, 9, 3981, 0.402+0.002, 0.055+0.001, 100
+16, 3, 6791, 0.048+0.000, 0.016+0.000, 200
+32, 4, 6856, 0.065+0.001, 0.017+0.000, 200
+64, 5, 6921, 0.087+0.001, 0.019+0.000, 200
+128, 6, 6986, 0.118+0.001, 0.022+0.000, 200
+256, 7, 7051, 0.170+0.003, 0.028+0.000, 200
+512, 8, 7116, 0.267+0.001, 0.040+0.000, 200
+1024, 9, 7181, 0.467+0.002, 0.063+0.001, 200
+16, 3, 9991, 0.072+0.001, 0.023+0.000, 300
+32, 4, 10056, 0.096+0.001, 0.024+0.000, 300
+64, 5, 10121, 0.124+0.001, 0.026+0.000, 300
+128, 6, 10186, 0.162+0.001, 0.029+0.000, 300
+256, 7, 10251, 0.221+0.001, 0.035+0.000, 300
+512, 8, 10316, 0.325+0.001, 0.047+0.001, 300
+1024, 9, 10381, 0.532+0.002, 0.069+0.000, 300
+16, 3, 13191, 0.097+0.002, 0.030+0.000, 400
+32, 4, 13256, 0.127+0.001, 0.031+0.000, 400
+64, 5, 13321, 0.163+0.001, 0.033+0.000, 400
+128, 6, 13386, 0.208+0.001, 0.036+0.000, 400
+256, 7, 13451, 0.276+0.005, 0.042+0.000, 400
+512, 8, 13516, 0.386+0.002, 0.054+0.001, 400
+1024, 9, 13581, 0.602+0.004, 0.077+0.002, 400
+test_boquila_DBPoE_topic_bench
+27, 2, 3590, 0.018+0.000, 0.009+0.000, 100
+81, 3, 3687, 0.031+0.000, 0.011+0.000, 100
+243, 4, 3784, 0.057+0.003, 0.016+0.000, 100
+729, 5, 3881, 0.130+0.001, 0.031+0.000, 100
+27, 2, 6790, 0.033+0.000, 0.016+0.000, 200
+81, 3, 6887, 0.053+0.001, 0.018+0.000, 200
+243, 4, 6984, 0.092+0.001, 0.023+0.000, 200
+729, 5, 7081, 0.166+0.001, 0.038+0.000, 200
+27, 2, 9990, 0.050+0.000, 0.023+0.000, 300
+81, 3, 10087, 0.077+0.001, 0.025+0.000, 300
+243, 4, 10184, 0.116+0.001, 0.031+0.000, 300
+729, 5, 10281, 0.204+0.001, 0.045+0.001, 300
+27, 2, 13190, 0.067+0.001, 0.031+0.001, 400
+81, 3, 13287, 0.101+0.001, 0.032+0.001, 400
+243, 4, 13384, 0.148+0.001, 0.037+0.000, 400
+729, 5, 13481, 0.242+0.001, 0.052+0.000, 400
+passed ringcip tests!
+no problems found

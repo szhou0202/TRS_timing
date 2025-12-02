@@ -30,12 +30,14 @@ Kernel configured for up to 8 processors.
 Processor type: arm64e (ARM64E)
 Processors active: 0 1 2 3 4 5 6 7
 Primary memory available: 16.00 gigabytes
-Default processor set: 500 tasks, 4362 threads, 8 processors
-Load average: 10.72, Mach factor: 0.68
+Default processor set: 541 tasks, 4626 threads, 8 processors
+Load average: 3.45, Mach factor: 5.02
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
+PATH: /Users/jianyul/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/
+PATH: /Users/jianyul/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/
 PATH: /usr/local/go/bin/
 PATH: /Users/jianyul/.nvm/versions/node/v22.18.0/bin/
 PATH: /Users/jianyul/.cargo/bin/
@@ -65,7 +67,7 @@ configure:2842: result: aarch64-apple-darwin23.6.0
 configure:2862: checking host system type
 configure:2877: result: aarch64-apple-darwin23.6.0
 configure:2917: checking for a BSD-compatible install
-configure:2991: result: /usr/bin/install -c
+configure:2991: result: /opt/homebrew/bin/ginstall -c
 configure:3002: checking whether sleep supports fractional seconds
 configure:3018: result: yes
 configure:3021: checking filesystem timestamp resolution
@@ -73,7 +75,7 @@ configure:3156: result: 2
 configure:3161: checking whether build environment is sane
 configure:3206: result: yes
 configure:3377: checking for a race-free mkdir -p
-configure:3420: result: mkdir -p
+configure:3420: result: /opt/homebrew/bin/gmkdir -p
 configure:3427: checking for gawk
 configure:3463: result: no
 configure:3427: checking for mawk
@@ -118,13 +120,13 @@ configure:4035: found /usr/bin/gcc
 configure:4047: result: gcc
 configure:4406: checking for C compiler version
 configure:4415: gcc --version >&5
-Apple clang version 15.0.0 (clang-1500.3.9.4)
+Apple clang version 16.0.0 (clang-1600.0.26.6)
 Target: arm64-apple-darwin23.6.0
 Thread model: posix
 InstalledDir: /Library/Developer/CommandLineTools/usr/bin
 configure:4426: $? = 0
 configure:4415: gcc -v >&5
-Apple clang version 15.0.0 (clang-1500.3.9.4)
+Apple clang version 16.0.0 (clang-1600.0.26.6)
 Target: arm64-apple-darwin23.6.0
 Thread model: posix
 InstalledDir: /Library/Developer/CommandLineTools/usr/bin
@@ -199,9 +201,9 @@ configure:5819: checking the name lister (/usr/bin/nm -B) interface
 configure:5827: gcc -c -g -O2  conftest.c >&5
 configure:5830: /usr/bin/nm -B "conftest.o"
 configure:5833: output
-0000000000000244 S _some_variable
+0000000000000250 S _some_variable
 0000000000000000 t ltmp0
-0000000000000244 s ltmp1
+0000000000000250 s ltmp1
 configure:5841: result: BSD nm
 configure:5844: checking whether ln -s works
 configure:5848: result: yes
@@ -388,8 +390,8 @@ configure:14422: gcc -E  conftest.c
 configure:14422: $? = 0
 configure:14438: gcc -E  conftest.c
 conftest.c:23:10: fatal error: 'ac_nonexistent.h' file not found
-#include <ac_nonexistent.h>
-         ^~~~~~~~~~~~~~~~~~
+   23 | #include <ac_nonexistent.h>
+      |          ^~~~~~~~~~~~~~~~~~
 1 error generated.
 configure:14438: $? = 1
 configure: failed program was:
@@ -421,8 +423,8 @@ configure:14481: gcc -E  conftest.c
 configure:14481: $? = 0
 configure:14497: gcc -E  conftest.c
 conftest.c:23:10: fatal error: 'ac_nonexistent.h' file not found
-#include <ac_nonexistent.h>
-         ^~~~~~~~~~~~~~~~~~
+   23 | #include <ac_nonexistent.h>
+      |          ^~~~~~~~~~~~~~~~~~
 1 error generated.
 configure:14497: $? = 1
 configure: failed program was:
@@ -454,13 +456,13 @@ configure:14612: found /usr/bin/gcc
 configure:14624: result: gcc
 configure:14983: checking for C compiler version
 configure:14992: gcc --version >&5
-Apple clang version 15.0.0 (clang-1500.3.9.4)
+Apple clang version 16.0.0 (clang-1600.0.26.6)
 Target: arm64-apple-darwin23.6.0
 Thread model: posix
 InstalledDir: /Library/Developer/CommandLineTools/usr/bin
 configure:15003: $? = 0
 configure:14992: gcc -v >&5
-Apple clang version 15.0.0 (clang-1500.3.9.4)
+Apple clang version 16.0.0 (clang-1600.0.26.6)
 Target: arm64-apple-darwin23.6.0
 Thread model: posix
 InstalledDir: /Library/Developer/CommandLineTools/usr/bin
@@ -494,8 +496,8 @@ configure:15516: gcc -E  conftest.c
 configure:15516: $? = 0
 configure:15532: gcc -E  conftest.c
 conftest.c:23:10: fatal error: 'ac_nonexistent.h' file not found
-#include <ac_nonexistent.h>
-         ^~~~~~~~~~~~~~~~~~
+   23 | #include <ac_nonexistent.h>
+      |          ^~~~~~~~~~~~~~~~~~
 1 error generated.
 configure:15532: $? = 1
 configure: failed program was:
@@ -527,8 +529,8 @@ configure:15575: gcc -E  conftest.c
 configure:15575: $? = 0
 configure:15591: gcc -E  conftest.c
 conftest.c:23:10: fatal error: 'ac_nonexistent.h' file not found
-#include <ac_nonexistent.h>
-         ^~~~~~~~~~~~~~~~~~
+   23 | #include <ac_nonexistent.h>
+      |          ^~~~~~~~~~~~~~~~~~
 1 error generated.
 configure:15591: $? = 1
 configure: failed program was:
@@ -598,8 +600,8 @@ configure:16175: gcc -c -g -O2 -W -fvisibility=hidden  conftest.c >&5
 configure:16175: $? = 0
 configure:16175: gcc -c -g -O2 -W -fvisibility=hidden  conftest.c >&5
 conftest.c:54:23: error: expected expression
-if (sizeof ((__int128)))
-                      ^
+   54 | if (sizeof ((__int128)))
+      |                       ^
 1 error generated.
 configure:16175: $? = 1
 configure: failed program was:
@@ -665,32 +667,32 @@ configure:16175: result: yes
 configure:16185: checking for __builtin_expect
 configure:16191: gcc -c -g -O2 -W -fvisibility=hidden  conftest.c >&5
 conftest.c:24:16: warning: ignoring return value of function declared with const attribute [-Wunused-value]
-void myfunc() {__builtin_expect(0,0);}
-               ^~~~~~~~~~~~~~~~ ~~~
+   24 | void myfunc() {__builtin_expect(0,0);}
+      |                ^~~~~~~~~~~~~~~~ ~~~
 1 warning generated.
 configure:16191: $? = 0
 configure:16193: result: yes
 configure:16215: checking for __builtin_popcount
 configure:16221: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 conftest.c:25:16: warning: ignoring return value of function declared with const attribute [-Wunused-value]
-void myfunc() {__builtin_popcount(0);}
-               ^~~~~~~~~~~~~~~~~~ ~
+   25 | void myfunc() {__builtin_popcount(0);}
+      |                ^~~~~~~~~~~~~~~~~~ ~
 1 warning generated.
 configure:16221: $? = 0
 configure:16223: result: yes
 configure:16235: checking for __builtin_popcountl
 configure:16241: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 conftest.c:26:16: warning: ignoring return value of function declared with const attribute [-Wunused-value]
-void myfunc() {__builtin_popcountl(0);}
-               ^~~~~~~~~~~~~~~~~~~ ~
+   26 | void myfunc() {__builtin_popcountl(0);}
+      |                ^~~~~~~~~~~~~~~~~~~ ~
 1 warning generated.
 configure:16241: $? = 0
 configure:16243: result: yes
 configure:16255: checking for __builtin_ctzl
 configure:16261: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 conftest.c:27:16: warning: ignoring return value of function declared with const attribute [-Wunused-value]
-void myfunc() {__builtin_ctzl(0);}
-               ^~~~~~~~~~~~~~ ~
+   27 | void myfunc() {__builtin_ctzl(0);}
+      |                ^~~~~~~~~~~~~~ ~
 1 warning generated.
 configure:16261: $? = 0
 configure:16263: result: yes
@@ -703,16 +705,16 @@ configure:16321: result: ok
 configure:16329: checking for  __builtin_clzll
 configure:16335: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 conftest.c:28:17: warning: ignoring return value of function declared with const attribute [-Wunused-value]
-void myfunc() { __builtin_clzll(1);}
-                ^~~~~~~~~~~~~~~ ~
+   28 | void myfunc() { __builtin_clzll(1);}
+      |                 ^~~~~~~~~~~~~~~ ~
 1 warning generated.
 configure:16335: $? = 0
 configure:16337: result: yes
 configure:16351: checking for x86_64 assembly availability
 configure:16368: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 conftest.c:36:61: error: invalid output constraint '+a' in asm
-  __asm__ __volatile__("movq $0x100000000,%1; mulq %%rsi" : "+a"(a) : "S"(tmp) : "cc", "%rdx");
-                                                            ^
+   36 |   __asm__ __volatile__("movq $0x100000000,%1; mulq %%rsi" : "+a"(a) : "S"(tmp) : "cc", "%rdx");
+      |                                                             ^
 1 error generated.
 configure:16368: $? = 1
 configure: failed program was:
@@ -772,60 +774,60 @@ configure:16766: $PKG_CONFIG --exists --print-errors "libcrypto"
 configure:16769: $? = 0
 configure:16807: result: yes
 configure:16814: checking for main in -lcrypto
-configure:16834: gcc -o conftest -g -O2 -W -fvisibility=hidden -O3   conftest.c -lcrypto   -L/opt/homebrew/Cellar/openssl@3/3.5.2/lib -lcrypto >&5
+configure:16834: gcc -o conftest -g -O2 -W -fvisibility=hidden -O3   conftest.c -lcrypto   -L/opt/homebrew/Cellar/openssl@3/3.6.0/lib -lcrypto >&5
 ld: warning: ignoring duplicate libraries: '-lcrypto'
 configure:16834: $? = 0
 configure:16846: result: yes
 configure:16917: checking for EC functions in libcrypto
 configure:16941: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 conftest.c:45:21: warning: 'EC_KEY_new_by_curve_name' is deprecated [-Wdeprecated-declarations]
-    EC_KEY *eckey = EC_KEY_new_by_curve_name(NID_secp256k1);
-                    ^
+   45 |     EC_KEY *eckey = EC_KEY_new_by_curve_name(NID_secp256k1);
+      |                     ^
 /usr/local/include/openssl/ec.h:1017:1: note: 'EC_KEY_new_by_curve_name' has been explicitly marked deprecated here
-OSSL_DEPRECATEDIN_3_0 EC_KEY *EC_KEY_new_by_curve_name(int nid);
-^
+ 1017 | OSSL_DEPRECATEDIN_3_0 EC_KEY *EC_KEY_new_by_curve_name(int nid);
+      | ^
 /usr/local/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
-#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
-                                                ^
+  194 | #   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+      |                                                 ^
 /usr/local/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
-#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
-                                                   ^
+   62 | #     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+      |                                                    ^
 conftest.c:46:5: warning: 'ECDSA_sign' is deprecated [-Wdeprecated-declarations]
-    ECDSA_sign(0, NULL, 0, NULL, NULL, eckey);
-    ^
+   46 |     ECDSA_sign(0, NULL, 0, NULL, NULL, eckey);
+      |     ^
 /usr/local/include/openssl/ec.h:1433:1: note: 'ECDSA_sign' has been explicitly marked deprecated here
-OSSL_DEPRECATEDIN_3_0 int ECDSA_sign(int type, const unsigned char *dgst,
-^
+ 1433 | OSSL_DEPRECATEDIN_3_0 int ECDSA_sign(int type, const unsigned char *dgst,
+      | ^
 /usr/local/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
-#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
-                                                ^
+  194 | #   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+      |                                                 ^
 /usr/local/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
-#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
-                                                   ^
+   62 | #     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+      |                                                    ^
 conftest.c:47:5: warning: 'ECDSA_verify' is deprecated [-Wdeprecated-declarations]
-    ECDSA_verify(0, NULL, 0, NULL, 0, eckey);
-    ^
+   47 |     ECDSA_verify(0, NULL, 0, NULL, 0, eckey);
+      |     ^
 /usr/local/include/openssl/ec.h:1466:1: note: 'ECDSA_verify' has been explicitly marked deprecated here
-OSSL_DEPRECATEDIN_3_0 int ECDSA_verify(int type, const unsigned char *dgst,
-^
+ 1466 | OSSL_DEPRECATEDIN_3_0 int ECDSA_verify(int type, const unsigned char *dgst,
+      | ^
 /usr/local/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
-#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
-                                                ^
+  194 | #   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+      |                                                 ^
 /usr/local/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
-#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
-                                                   ^
+   62 | #     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+      |                                                    ^
 conftest.c:48:5: warning: 'EC_KEY_free' is deprecated [-Wdeprecated-declarations]
-    EC_KEY_free(eckey);
-    ^
+   48 |     EC_KEY_free(eckey);
+      |     ^
 /usr/local/include/openssl/ec.h:1022:1: note: 'EC_KEY_free' has been explicitly marked deprecated here
-OSSL_DEPRECATEDIN_3_0 void EC_KEY_free(EC_KEY *key);
-^
+ 1022 | OSSL_DEPRECATEDIN_3_0 void EC_KEY_free(EC_KEY *key);
+      | ^
 /usr/local/include/openssl/macros.h:194:49: note: expanded from macro 'OSSL_DEPRECATEDIN_3_0'
-#   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
-                                                ^
+  194 | #   define OSSL_DEPRECATEDIN_3_0                OSSL_DEPRECATED(3.0)
+      |                                                 ^
 /usr/local/include/openssl/macros.h:62:52: note: expanded from macro 'OSSL_DEPRECATED'
-#     define OSSL_DEPRECATED(since) __attribute__((deprecated))
-                                                   ^
+   62 | #     define OSSL_DEPRECATED(since) __attribute__((deprecated))
+      |                                                    ^
 4 warnings generated.
 configure:16941: $? = 0
 configure:16949: result: yes
@@ -836,8 +838,8 @@ configure:17294: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 configure:17294: $? = 0
 configure:17313: gcc -c -g -O2 -W -fvisibility=hidden -O3  conftest.c >&5
 conftest.c:46:4: error: use of undeclared identifier 'not'
-                 not big endian
-                 ^
+   46 |                  not big endian
+      |                  ^
 1 error generated.
 configure:17313: $? = 1
 configure: failed program was:
@@ -926,8 +928,10 @@ on me-nb58
 config.status:1173: creating Makefile
 config.status:1173: creating libsecp256k1.pc
 config.status:1173: creating src/libsecp256k1-config.h
+config.status:1354: src/libsecp256k1-config.h is unchanged
 config.status:1402: executing depfiles commands
 config.status:1479: cd .       && sed -e '/# am--include-marker/d' Makefile         | make -f - am--depfiles
+make: Nothing to be done for `am--depfiles'.
 config.status:1484: $? = 0
 config.status:1402: executing libtool commands
 
@@ -999,8 +1003,9 @@ ac_cv_path_ac_pt_AR=/usr/bin/ar
 ac_cv_path_ac_pt_PKG_CONFIG=/opt/homebrew/bin/pkg-config
 ac_cv_path_ac_pt_RANLIB=/usr/bin/ranlib
 ac_cv_path_ac_pt_STRIP=/usr/bin/strip
-ac_cv_path_install='/usr/bin/install -c'
+ac_cv_path_install='/opt/homebrew/bin/ginstall -c'
 ac_cv_path_lt_DD=/bin/dd
+ac_cv_path_mkdir=/opt/homebrew/bin/gmkdir
 ac_cv_prog_AWK=awk
 ac_cv_prog_CPP='gcc -E'
 ac_cv_prog_FILECMD=file
@@ -1057,14 +1062,14 @@ lt_cv_sys_max_cmd_len=786432
 lt_cv_to_host_file_cmd=func_convert_file_noop
 lt_cv_to_tool_file_cmd=func_convert_file_noop
 lt_cv_truncate_bin='/bin/dd bs=4096 count=1'
-pkg_cv_CRYPTO_CFLAGS=-I/opt/homebrew/Cellar/openssl@3/3.5.2/include
-pkg_cv_CRYPTO_LIBS='-L/opt/homebrew/Cellar/openssl@3/3.5.2/lib -lcrypto'
+pkg_cv_CRYPTO_CFLAGS=-I/opt/homebrew/Cellar/openssl@3/3.6.0/include
+pkg_cv_CRYPTO_LIBS='-L/opt/homebrew/Cellar/openssl@3/3.6.0/lib -lcrypto'
 
 ## ----------------- ##
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/U2SSO/crypto-dbpoe/build-aux/missing'\'' aclocal-1.18'
+ACLOCAL='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/U2SSO/crypto-dbpoe/build-aux/missing'\'' aclocal-1.18'
 AMDEPBACKSLASH='\'
 AMDEP_FALSE='#'
 AMDEP_TRUE=''
@@ -1074,9 +1079,9 @@ AM_DEFAULT_V='$(AM_DEFAULT_VERBOSITY)'
 AM_DEFAULT_VERBOSITY='0'
 AM_V='$(V)'
 AR='/usr/bin/ar'
-AUTOCONF='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/U2SSO/crypto-dbpoe/build-aux/missing'\'' autoconf'
-AUTOHEADER='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/U2SSO/crypto-dbpoe/build-aux/missing'\'' autoheader'
-AUTOMAKE='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/U2SSO/crypto-dbpoe/build-aux/missing'\'' automake-1.18'
+AUTOCONF='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/U2SSO/crypto-dbpoe/build-aux/missing'\'' autoconf'
+AUTOHEADER='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/U2SSO/crypto-dbpoe/build-aux/missing'\'' autoheader'
+AUTOMAKE='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/U2SSO/crypto-dbpoe/build-aux/missing'\'' automake-1.18'
 AWK='awk'
 BREW='/opt/homebrew/bin/brew'
 BUILD_EXEEXT=''
@@ -1093,8 +1098,8 @@ CPP='gcc -E'
 CPPFLAGS=''
 CPPFLAGS_FOR_BUILD=''
 CPP_FOR_BUILD='gcc -E'
-CRYPTO_CFLAGS='-I/opt/homebrew/Cellar/openssl@3/3.5.2/include'
-CRYPTO_LIBS='-L/opt/homebrew/Cellar/openssl@3/3.5.2/lib -lcrypto'
+CRYPTO_CFLAGS='-I/opt/homebrew/Cellar/openssl@3/3.6.0/include'
+CRYPTO_LIBS='-L/opt/homebrew/Cellar/openssl@3/3.6.0/lib -lcrypto'
 CSCOPE='cscope'
 CTAGS='ctags'
 CYGPATH_W='echo'
@@ -1151,9 +1156,9 @@ LIPO='lipo'
 LN_S='ln -s'
 LTLIBOBJS=''
 LT_SYS_LIBRARY_PATH=''
-MAKEINFO='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/U2SSO/crypto-dbpoe/build-aux/missing'\'' makeinfo'
+MAKEINFO='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/U2SSO/crypto-dbpoe/build-aux/missing'\'' makeinfo'
 MANIFEST_TOOL=':'
-MKDIR_P='mkdir -p'
+MKDIR_P='/opt/homebrew/bin/gmkdir -p'
 NM='/usr/bin/nm -B'
 NMEDIT='nmedit'
 OBJDUMP='objdump'
@@ -1175,8 +1180,8 @@ PORT=''
 RANLIB='/usr/bin/ranlib'
 SECP_INCLUDES=' -I/opt/homebrew/opt/gmp/include'
 SECP_LIBS=' -L/opt/homebrew/opt/gmp/lib -lgmp'
-SECP_TEST_INCLUDES=' -I/opt/homebrew/Cellar/openssl@3/3.5.2/include'
-SECP_TEST_LIBS='-L/opt/homebrew/Cellar/openssl@3/3.5.2/lib -lcrypto'
+SECP_TEST_INCLUDES=' -I/opt/homebrew/Cellar/openssl@3/3.6.0/include'
+SECP_TEST_LIBS='-L/opt/homebrew/Cellar/openssl@3/3.6.0/lib -lcrypto'
 SED='/usr/bin/sed'
 SET_MAKE=''
 SHELL='/bin/sh'
@@ -1235,7 +1240,7 @@ host_vendor='apple'
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/U2SSO/crypto-dbpoe/build-aux/install-sh'\'''
+install_sh='${SHELL} '\''/Users/jianyul/SCHOOL COOOOOODE/Senior Project/szhou_trs_timing/U2SSO/crypto-dbpoe/build-aux/install-sh'\'''
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'

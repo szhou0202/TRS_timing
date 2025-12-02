@@ -59,7 +59,7 @@ pub fn proof_time(ring_size: usize, set_publickey: Vec<[u8;32]>, set_secretkey: 
 
 #[test]
 fn proof_time_bench() {
-    eprintln!("proof time");
+    println!("proof time");
     for &n in &RING_SIZES {
         let tup = generate_keys_and_message(n);
         let set_publickey = tup.0;
@@ -86,7 +86,7 @@ fn proof_time_bench() {
 
         let std_dev: f64 = variance.sqrt();
 
-        eprintln!("n: {}, ms: {}+{:.3}", n, mean, std_dev);
+        println!("n: {}, ms: {}+{:.3}", n, mean, std_dev);
     }
 }
 
@@ -101,7 +101,7 @@ pub fn verification_time(msg: Vec<u8>, tag: Tag, sigs: Vec<Signature>, ring_size
 #[test]
 
 fn verification_time_bench() {
-    eprintln!("verify time");
+    println!("verify time");
     for &n in &RING_SIZES {
         let tup = generate_keys_and_message(n);
         let set_publickey = tup.0;
@@ -130,7 +130,7 @@ fn verification_time_bench() {
 
         let std_dev: f64 = variance.sqrt();
 
-        eprintln!("n: {}, ms: {}+{:.3}", n, mean, std_dev);
+        println!("n: {}, ms: {}+{:.3}", n, mean, std_dev);
     }
 }
 
@@ -140,7 +140,7 @@ pub fn trace_time(msg1: Vec<u8>, msg2: Vec<u8>, tag: Tag, sig1: Signature, sig2:
 
 #[test]
 fn trace_time_bench() {
-    eprintln!("trace time");
+    println!("trace time");
     for &n in &RING_SIZES {
         let tup = generate_keys_and_message(n);
         let set_publickey = tup.0;
@@ -170,6 +170,6 @@ fn trace_time_bench() {
 
         let std_dev: f64 = variance.sqrt();
 
-        eprintln!("n: {}, ms: {}+{:.3}", n, mean, std_dev);
+        println!("n: {}, ms: {}+{:.3}", n, mean, std_dev);
     }
 }

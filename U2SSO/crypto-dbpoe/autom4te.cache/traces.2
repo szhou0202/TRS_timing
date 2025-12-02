@@ -698,7 +698,7 @@ m4trace:/opt/homebrew/share/aclocal/ltdl.m4:909: -1- AU_DEFUN([AC_LTDL_DLSYM_USC
 m4trace:/opt/homebrew/share/aclocal/ltdl.m4:909: -1- AC_DEFUN([AC_LTDL_DLSYM_USCORE], [m4_warn([obsolete], [The macro 'AC_LTDL_DLSYM_USCORE' is obsolete.
 You should run autoupdate.])dnl
 m4_if($#, 0, [LT_FUNC_DLSYM_USCORE], [LT_FUNC_DLSYM_USCORE($@)])])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:64: -1- AC_DEFUN([PKG_PROG_PKG_CONFIG], [m4_pattern_forbid([^_?PKG_[A-Z_]+$])
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:62: -1- AC_DEFUN([PKG_PROG_PKG_CONFIG], [m4_pattern_forbid([^_?PKG_[A-Z_]+$])
 m4_pattern_allow([^PKG_CONFIG(_(PATH|LIBDIR|SYSROOT_DIR|ALLOW_SYSTEM_(CFLAGS|LIBS)))?$])
 m4_pattern_allow([^PKG_CONFIG_(DISABLE_UNINSTALLED|TOP_BUILD_DIR|DEBUG_SPEW)$])
 AC_ARG_VAR([PKG_CONFIG], [path to pkg-config utility])
@@ -722,21 +722,21 @@ if test -z "$PKG_CONFIG"; then
 	m4_default([$2], [AC_MSG_ERROR([pkg-config not found])])
 fi[]dnl
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:101: -1- AC_DEFUN([PKG_CHECK_EXISTS], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:99: -1- AC_DEFUN([PKG_CHECK_EXISTS], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
 if test -n "$PKG_CONFIG" && \
     AC_RUN_LOG([$PKG_CONFIG --exists --print-errors "$1"]); then
   m4_default([$2], [:])
 m4_ifvaln([$3], [else
   $3])dnl
 fi])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:130: -1- AC_DEFUN([_PKG_SHORT_ERRORS_SUPPORTED], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:128: -1- AC_DEFUN([_PKG_SHORT_ERRORS_SUPPORTED], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])
 if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
         _pkg_short_errors_supported=yes
 else
         _pkg_short_errors_supported=no
 fi[]dnl
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:148: -1- AC_DEFUN([PKG_CHECK_MODULES], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:146: -1- AC_DEFUN([PKG_CHECK_MODULES], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
 AC_ARG_VAR([$1][_CFLAGS], [C compiler flags for $1, overriding pkg-config])dnl
 AC_ARG_VAR([$1][_LIBS], [linker flags for $1, overriding pkg-config])dnl
 
@@ -789,13 +789,13 @@ else
         $3
 fi[]dnl
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:217: -1- AC_DEFUN([PKG_CHECK_MODULES_STATIC], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:215: -1- AC_DEFUN([PKG_CHECK_MODULES_STATIC], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
 _save_PKG_CONFIG=$PKG_CONFIG
 PKG_CONFIG="$PKG_CONFIG --static"
 PKG_CHECK_MODULES($@)
 PKG_CONFIG=$_save_PKG_CONFIG[]dnl
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:235: -1- AC_DEFUN([PKG_INSTALLDIR], [m4_pushdef([pkg_default], [m4_default([$1], ['${libdir}/pkgconfig'])])
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:233: -1- AC_DEFUN([PKG_INSTALLDIR], [m4_pushdef([pkg_default], [m4_default([$1], ['${libdir}/pkgconfig'])])
 m4_pushdef([pkg_description],
     [pkg-config installation directory @<:@]pkg_default[@:>@])
 AC_ARG_WITH([pkgconfigdir],
@@ -805,7 +805,7 @@ AC_SUBST([pkgconfigdir], [$with_pkgconfigdir])
 m4_popdef([pkg_default])
 m4_popdef([pkg_description])
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:257: -1- AC_DEFUN([PKG_NOARCH_INSTALLDIR], [m4_pushdef([pkg_default], [m4_default([$1], ['${datadir}/pkgconfig'])])
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:255: -1- AC_DEFUN([PKG_NOARCH_INSTALLDIR], [m4_pushdef([pkg_default], [m4_default([$1], ['${datadir}/pkgconfig'])])
 m4_pushdef([pkg_description],
     [pkg-config arch-independent installation directory @<:@]pkg_default[@:>@])
 AC_ARG_WITH([noarch-pkgconfigdir],
@@ -815,7 +815,7 @@ AC_SUBST([noarch_pkgconfigdir], [$with_noarch_pkgconfigdir])
 m4_popdef([pkg_default])
 m4_popdef([pkg_description])
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:276: -1- AC_DEFUN([PKG_CHECK_VAR], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:274: -1- AC_DEFUN([PKG_CHECK_VAR], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
 AC_ARG_VAR([$1], [value of $3 for $2, overriding pkg-config])dnl
 
 _PKG_CONFIG([$1], [variable="][$3]["], [$2])
@@ -823,7 +823,7 @@ AS_VAR_COPY([$1], [pkg_cv_][$1])
 
 AS_VAR_IF([$1], [""], [$5], [$4])dnl
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:294: -1- AC_DEFUN([PKG_WITH_MODULES], [
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:292: -1- AC_DEFUN([PKG_WITH_MODULES], [
 m4_pushdef([with_arg], m4_tolower([$1]))
 
 m4_pushdef([description],
@@ -852,13 +852,13 @@ m4_popdef([description])
 m4_popdef([def_arg])
 
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:331: -1- AC_DEFUN([PKG_HAVE_WITH_MODULES], [
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:329: -1- AC_DEFUN([PKG_HAVE_WITH_MODULES], [
 PKG_WITH_MODULES([$1],[$2],,,[$3],[$4])
 
 AM_CONDITIONAL([HAVE_][$1],
                [test "$AS_TR_SH([with_]m4_tolower([$1]))" = "yes"])
 ])
-m4trace:/opt/homebrew/share/aclocal/pkg.m4:346: -1- AC_DEFUN([PKG_HAVE_DEFINE_WITH_MODULES], [
+m4trace:/opt/homebrew/share/aclocal/pkg.m4:344: -1- AC_DEFUN([PKG_HAVE_DEFINE_WITH_MODULES], [
 PKG_HAVE_WITH_MODULES([$1],[$2],[$3],[$4])
 
 AS_IF([test "$AS_TR_SH([with_]m4_tolower([$1]))" = "yes"],
