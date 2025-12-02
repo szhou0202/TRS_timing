@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"hash"
 	"log"
+	"math"
 	"reflect"
 	"time"
 	"unsafe"
@@ -147,16 +148,19 @@ func main() {
 	// for i := range ring_sizes {
 	// 	fmt.Printf("%.1f\n", gtimes[i])
 	// }
-	// fmt.Printf("\n")
-	// stimes := RunTenTimesAndAverage(SignTime)
-	// for i := range ring_sizes {
-	// 	fmt.Printf("%.1f\n", stimes[i])
-	// }
-	// fmt.Printf("\n")
-	// vtimes := RunTenTimesAndAverage(VerifyTime)
-	// for i := range ring_sizes {
-	// 	fmt.Printf("%.1f\n", vtimes[i])
-	// }
+	fmt.Printf("\n")
+	fmt.Printf("singing time")
+	stimes, stds := RunTenTimesAndAverage(SignTime)
+	for i := range ring_sizes {
+		fmt.Printf("%.3f+%.3f\n", stimes[i], stds[i])
+	}
+	fmt.Printf("\n")
+	fmt.Printf("verify time")
+	vtimes, stdv := RunTenTimesAndAverage(VerifyTime)
+	for i := range ring_sizes {
+		fmt.Printf("%.3f+%.3f\n", vtimes[i], stdv[i])
+	}
+
 	sizes := SignatureSizes()
 	for i := range ring_sizes {
 		fmt.Printf("%d\n", sizes[i])
@@ -241,6 +245,25 @@ func VerifyTime() []time.Duration {
 	return times
 }
 
+func TraceTime() []time.Duration {
+	times := make([]time.Duration, 0)
+
+	for _, size := range ring_sizes {
+		publicKeys, privateKeys := CreateNKeys(size)
+		message := []byte("Hello world!")
+		caseIdentifier := []byte("Round Nr.1")
+
+		_, signature := ring.Create(elliptic.P256, ring.HashCodes["sha3-256"], privateKeys[0], publicKeys, message, caseIdentifier)
+
+		start := time.Now()
+		_ = ring.Verify(signature, publicKeys, message, caseIdentifier)
+		elapsed := time.Since(start)
+
+		times = append(times, elapsed)
+	}
+	return times
+}
+
 func colAverages(lists [][]int) ([]float64, error) {
 	if len(lists) == 0 {
 		return nil, fmt.Errorf("no lists")
@@ -263,13 +286,52 @@ func colAverages(lists [][]int) ([]float64, error) {
 	return avg, nil
 }
 
-func RunTenTimesAndAverage(funcToTime func() []time.Duration) []float64 {
+func colStd(lists [][]int) ([]float64, error) {
+	if len(lists) == 0 {
+		return nil, fmt.Errorf("no lists")
+	}
+	n := len(lists[0])
+	for k := range lists {
+		if len(lists[k]) != n {
+			return nil, fmt.Errorf("mismatched lengths at list %d", k)
+		}
+	}
+
+	rows := float64(len(lists))
+	std := make([]float64, n)
+
+	// 1. compute means per column
+	means := make([]float64, n)
+	for col := 0; col < n; col++ {
+		var sum float64
+		for _, row := range lists {
+			sum += float64(row[col])
+		}
+		means[col] = sum / rows
+	}
+
+	// 2. compute variance per column
+	for col := 0; col < n; col++ {
+		var sq float64
+		mu := means[col]
+		for _, row := range lists {
+			d := float64(row[col]) - mu
+			sq += d * d
+		}
+		variance := sq / (rows - 1)    // population variance
+		std[col] = math.Sqrt(variance) // requires: import "math"
+	}
+
+	return std, nil
+}
+
+func RunTenTimesAndAverage(funcToTime func() []time.Duration) ([]float64, []float64) {
 	var allTimes [][]int
 	for i := 0; i < 10; i++ {
 		times := funcToTime()
 		intTimes := make([]int, len(times))
 		for j, t := range times {
-			intTimes[j] = int(t.Nanoseconds())
+			intTimes[j] = int(t.Milliseconds())
 		}
 		allTimes = append(allTimes, intTimes)
 	}
@@ -277,7 +339,12 @@ func RunTenTimesAndAverage(funcToTime func() []time.Duration) []float64 {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return avgTimes
+	stdTimes, err := colStd(allTimes)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return avgTimes, stdTimes
 }
 
 func SignatureSizes() []uint64 {

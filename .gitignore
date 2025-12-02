@@ -1,4 +1,4 @@
 TRS/target/
 *.DS_Store*
-ASC/target/
-target/*
+*/target/*
+U2SSO/*/keys/*

@@ -669,7 +669,6 @@ pub fn generate_keys_and_message(ring_size: usize) -> (Vec<[u8;32]>, Vec<[u8;32]
 
 pub fn proof_time(ring_size: usize, set_publickey: Vec<[u8;32]>, set_secretkey: Vec<[u8;32]>, tag: Tag, msg: Vec<u8>) -> Vec<Signature> {
     // Times the signing of messages, in other words, proof generation time 
-    // a bunch of users sign the same message
 
     // PrivateKey expects the scalar concatenated with the public key
     let mut rng = rand::thread_rng(); // szhou: what is this used for again???
@@ -689,6 +688,10 @@ pub fn verification_time(msg: Vec<u8>, tag: Tag, sigs: Vec<Signature>, ring_size
     // for i in 0..ring_size {
     verify(&msg, &tag, &sigs[0]);
     // }
+}
+
+pub fn trace_time(msg1: Vec<u8>, msg2: Vec<u8>, tag: Tag, sig1: Signature, sig2: Signature) {
+    trace(&tag, &msg1, &msg2, &sig1, &sig2);
 }
 
 pub fn generation_time(ring_size: usize) {

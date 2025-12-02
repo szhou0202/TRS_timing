@@ -1,1 +1,3 @@
 This code is adapted from [TRSVote](https://github.com/airlanggasusanto/TRS-Vote) and [lirisi](https://github.com/zbohm/lirisi). 
+
+This repo benchmarks the signing time, verification time, and proof size of a variety of "anonymous group" signature schemes, including traceable ring signature, linkable ring signature, and the signatures used in "Anonymous Self-Credentials and their Application to Single-Sign-On".
